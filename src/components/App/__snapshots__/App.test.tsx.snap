@@ -4,8 +4,116 @@ exports[`App should render component 1`] = `
 <div>
   <div>
     <div
-      class="sc-AxjAm iUyxaM"
-    />
+      class="sc-AxhCb fjHKcX"
+    >
+      <div
+        class="MuiPaper-root MuiCard-root sc-AxiKw huA-dvX MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          class="sc-AxjAm jWHIXs"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </div>
+        <div
+          class="sc-AxirZ eaRpvN"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            Clifford Prosacco
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            Conroy, MacGyver and Kunde
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            242-187-5121 x89848
+          </p>
+        </div>
+      </div>
+      <div
+        class="MuiPaper-root MuiCard-root sc-AxiKw huA-dvX MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          class="sc-AxjAm jWHIXs"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"
+            />
+          </svg>
+        </div>
+        <div
+          class="sc-AxirZ eaRpvN"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            Kris LLC
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            06832 Juliana Gateway
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          />
+        </div>
+      </div>
+      <div
+        class="MuiPaper-root MuiCard-root sc-AxiKw huA-dvX MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          class="sc-AxjAm jWHIXs"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+            />
+          </svg>
+        </div>
+        <div
+          class="sc-AxirZ eaRpvN"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            Ritchie, Little and Crooks
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            98350 Herzog Burg
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
