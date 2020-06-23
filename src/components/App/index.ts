@@ -1,1 +1,1 @@
-export { App } from "./App";
+export { StyledApp as App } from "./App";

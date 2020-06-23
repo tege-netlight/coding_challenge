@@ -1,10 +1,10 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { App } from "./App";
+import { ListWrapper } from "./index";
 
-describe("App", () => {
+describe("ListWrapper", () => {
   it("should render component", () => {
-    const { container } = render(<App />);
+    const { container } = render(<ListWrapper />);
 
     expect(container).toMatchSnapshot();
   });
