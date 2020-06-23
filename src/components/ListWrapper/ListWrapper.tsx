@@ -4,6 +4,7 @@ import { ListItem } from "../ListItem";
 import { getData } from "../../services/itemService";
 import { InputAdornment, TextField } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import Pagination from "@material-ui/lab/Pagination";
 
 type ListWrapperProps = {
   className?: string;
@@ -11,8 +12,9 @@ type ListWrapperProps = {
 
 const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
   const [itemList, setItemList] = useState<Item[]>([]);
-  const [filteredItemList, setFilteredItemList] = useState<Item[]>([]);
   const [searchInput, setSearchInput] = useState("");
+  const [page, setPage] = useState(1);
+  const [paginatedList, setPaginatedList] = useState<Item[]>([]);
 
   useEffect(() => {
     getData().then((items) => {
@@ -20,20 +22,29 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
         return a.name > b.name ? 1 : -1;
       });
       setItemList(itemList);
-      setFilteredItemList(itemList);
+      setPaginatedList(itemList.slice((page - 1) * 10, (page - 1) * 10 + 10));
     });
   });
 
   useEffect(() => {
-    setFilteredItemList(
-      itemList.filter((item) =>
-        item.name.toLowerCase().includes(searchInput.toLowerCase())
-      )
+    const filteredItemList = itemList.filter((item) =>
+      item.name.toLowerCase().includes(searchInput.toLowerCase())
     );
-  }, [searchInput, itemList]);
+    setPaginatedList(
+      filteredItemList.slice((page - 1) * 10, (page - 1) * 10 + 10)
+    );
+  }, [searchInput, itemList, page]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
+    setPage(1);
+  };
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
   };
 
   return (
@@ -51,9 +62,15 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
           }}
         />
       </div>
-      {filteredItemList.map((item) => (
+      {paginatedList.map((item) => (
         <ListItem key={`${item.id}-${item.type}`} item={item} />
       ))}
+      <Pagination
+        count={Math.floor(itemList.length / 10)}
+        page={page}
+        onChange={handlePageChange}
+        shape="rounded"
+      />
     </div>
   );
 };
