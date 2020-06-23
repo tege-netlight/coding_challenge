@@ -2,9 +2,10 @@ import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ListItem } from "../ListItem";
 import { getData } from "../../services/itemService";
-import { InputAdornment, TextField } from "@material-ui/core";
+import { Checkbox, FormControlLabel, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Pagination from "@material-ui/lab/Pagination";
+import { SearchBar } from "./SearchBar";
 
 type ListWrapperProps = {
   className?: string;
@@ -15,6 +16,9 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
   const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(1);
   const [paginatedList, setPaginatedList] = useState<Item[]>([]);
+  const [typeFilter, setTypeFilter] = useState<string[]>([]);
+  const pageSize = 10;
+  const [pageCount, setPageCount] = useState(Math.ceil(itemList.length / 10));
 
   useEffect(() => {
     getData().then((items) => {
@@ -22,18 +26,35 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
         return a.name > b.name ? 1 : -1;
       });
       setItemList(itemList);
-      setPaginatedList(itemList.slice((page - 1) * 10, (page - 1) * 10 + 10));
+      setPaginatedList(
+        itemList.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+      );
+      setPageCount(Math.ceil(itemList.length / 10));
     });
-  });
+  }, [page]);
+
+  const filterByType = (typeFilter: string[], itemList: Item[]) => {
+    if (typeFilter.length) {
+      return itemList.filter((item) => typeFilter.includes(item.type));
+    } else {
+      return itemList;
+    }
+  };
 
   useEffect(() => {
-    const filteredItemList = itemList.filter((item) =>
+    const filteredByType = filterByType(typeFilter, itemList);
+    const filteredBySearch = filteredByType.filter((item: Item) =>
       item.name.toLowerCase().includes(searchInput.toLowerCase())
     );
     setPaginatedList(
-      filteredItemList.slice((page - 1) * 10, (page - 1) * 10 + 10)
+      filteredBySearch.slice(
+        (page - 1) * pageSize,
+        (page - 1) * pageSize + pageSize
+      )
     );
-  }, [searchInput, itemList, page]);
+
+    setPageCount(Math.ceil(filteredBySearch.length / 10));
+  }, [searchInput, itemList, page, typeFilter]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
@@ -47,10 +68,25 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
     setPage(value);
   };
 
+  const handleTypeFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const type = event.target.name;
+    const newTypeFilters = [...typeFilter];
+    if (newTypeFilters.includes(type)) {
+      const index = newTypeFilters.indexOf(type);
+      newTypeFilters.splice(index, 1);
+    } else {
+      newTypeFilters.push(type);
+    }
+    setTypeFilter(newTypeFilters);
+    setPage(1);
+  };
+
   return (
     <div className={className}>
       <div>
-        <TextField
+        <SearchBar
           value={searchInput}
           onChange={handleSearch}
           InputProps={{
@@ -62,11 +98,43 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
           }}
         />
       </div>
+      <div>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={typeFilter.includes("agent")}
+              name="agent"
+              onChange={handleTypeFilterChange}
+            />
+          }
+          label="Agents"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={typeFilter.includes("shop")}
+              name="shop"
+              onChange={handleTypeFilterChange}
+            />
+          }
+          label="Shops"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={typeFilter.includes("property")}
+              name="property"
+              onChange={handleTypeFilterChange}
+            />
+          }
+          label="Properties"
+        />
+      </div>
       {paginatedList.map((item) => (
         <ListItem key={`${item.id}-${item.type}`} item={item} />
       ))}
       <Pagination
-        count={Math.floor(itemList.length / 10)}
+        count={pageCount}
         page={page}
         onChange={handlePageChange}
         shape="rounded"
@@ -76,5 +144,7 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
 };
 
 export const StyledListWrapper = styled(ListWrapper)`
+  padding-top: 20px;
+  padding-bottom: 20px;
   width: 500px;
 `;
