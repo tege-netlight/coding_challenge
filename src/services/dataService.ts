@@ -4,7 +4,7 @@ type RequestParams = {
 
 export const apiRequest = async <T>({
   endpoint,
-}: RequestParams): Promise<Item[]> => {
+}: RequestParams): Promise<ResponseItem[]> => {
   try {
     const response = await fetch(endpoint, {
       method: "GET",

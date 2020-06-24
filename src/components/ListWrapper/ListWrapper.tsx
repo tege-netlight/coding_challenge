@@ -26,12 +26,10 @@ const ListWrapper: FC<ListWrapperProps> = ({ className }) => {
         return a.name > b.name ? 1 : -1;
       });
       setItemList(itemList);
-      setPaginatedList(
-        itemList.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-      );
+      setPaginatedList(itemList.slice(0, pageSize));
       setPageCount(Math.ceil(itemList.length / 10));
     });
-  }, [page]);
+  }, []);
 
   const filterByType = (typeFilter: string[], itemList: Item[]) => {
     if (typeFilter.length) {
